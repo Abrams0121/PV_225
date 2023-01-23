@@ -26,14 +26,46 @@ public:
 	{
 		this->y = y;
 	}
+	//					Constructors:
+	/*Point()
+	{
+		x = y = 0;
+		cout << "DefConstructor" << "\t" << this << endl;
+	}*/
+	/*Point(double x) {
+		this->x = x;
+		this->y = 0;
+		cout << "1ArgConstructor" << this << endl;
+	}*/
+	Point(double x=0, double y=0)
+	{
+		this->x = x;
+		this->y = y;
+		cout << "Constructor/t" << this << endl;
+	}
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "Copy constructor" << this << endl;
+	}
+	~Point()
+	{
+		cout << "Destructor" << "\t" << this << endl;
+	}
 
 	//					Methods:
-	double distance(Point other)
+	double distance(Point other)const
 	{
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
 		double distance = sqrt(x_distance*x_distance + y_distance * y_distance);
 		return distance;
+	}
+
+	void print()const
+	{
+		cout << "X= " << x << "\t" << "Y= " << y << endl;
 	}
 };
 
@@ -61,14 +93,30 @@ void main()
 	//https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F  
 #endif // STRUCT_POINT
 
-	Point A;
+	/*Point A;
 	A.set_x(2);
 	A.set_y(3);
 	Point B;
 	B.set_x(7);
 	B.set_y(8);
 	cout << A.get_x() << "\t" << A.get_y() << endl;
-	cout << "Расстояние от точки A до точки B: " << A.distance(B) << endl;
+	cout << "Расстояние от точки A до точки B: " << A.distance(B) << endl;*/
+	Point A;
+	cout << A.get_x() << "\t" << A.get_y() << endl;
+	A.print();
+
+	Point b(2, 3);
+	b.print();
+
+	Point C = 4; // Single-arqument constructor
+	C.print();
+
+	Point D = C; //Copy constructor;
+	// Deep copy - побитовое , побайтовое , поэеменнтное копирование
+	D.print();
+
+	Point F(D);
+	F.print();
 }
 
 /*
