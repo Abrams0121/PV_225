@@ -2,6 +2,8 @@
 #include<iostream>
 using namespace std;
 
+#define delimiter "\n -----------------------------------------------------------\n"
+
 //				КЛАСС - ЭТО ТИП ДАННЫХ!!!
 //				СТРУКТУРА - ЭТО ТИП ДАННЫХ!!!
 
@@ -41,21 +43,33 @@ public:
 	{
 		this->x = x;
 		this->y = y;
-		cout << "Constructor/t" << this << endl;
+		cout << "Constructor\t" << this << endl;
+		
 	}
 	Point(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
-		cout << "Copy constructor" << this << endl;
+		cout << "Copy constructor\t" << this << endl;
+		
 	}
 	~Point()
 	{
 		cout << "Destructor" << "\t" << this << endl;
+		
+	}
+
+	//					Operators
+	Point operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "Copy Assignment: \t" << this << endl;
+		return *this;
 	}
 
 	//					Methods:
-	double distance(Point other)const
+	double distance(const Point& other)const
 	{
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
@@ -69,7 +83,19 @@ public:
 	}
 };
 
+double distance(const Point& A, const Point& B)
+{
+	double x_distance = A.get_x() - B.get_x();
+	double y_distance = A.get_y() - B.get_y();
+	double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
+	return distance;
+}
+
 //#define STRUCT_POINT
+//#define DISTANCE_CHECK
+//#define CONSTRUCTORS_CHECK
+//#define ASSIGNMENT_CHECK_1
+#define ASSIGNMENT_CHECK_2
 
 void main()
 {
@@ -93,14 +119,30 @@ void main()
 	//https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F  
 #endif // STRUCT_POINT
 
-	/*Point A;
+#ifdef DISTANCE_CHECK
+	Point A;
 	A.set_x(2);
 	A.set_y(3);
+	cout << A.get_x() << "\t" << A.get_y() << endl;
+	cout << delimiter << endl;
+
 	Point B;
 	B.set_x(7);
 	B.set_y(8);
-	cout << A.get_x() << "\t" << A.get_y() << endl;
-	cout << "Расстояние от точки A до точки B: " << A.distance(B) << endl;*/
+	cout << B.get_x() << "\t" << B.get_y() << endl;
+	cout << delimiter << endl;
+
+	cout << "Расстояние от точки A до точки B: " << A.distance(B) << endl;
+	cout << delimiter << endl;
+	cout << "Расстояние от точки B до точки A: " << B.distance(A) << endl;
+	cout << delimiter << endl;
+	cout << "Расстояние между точками A и B:   " << distance(A, B) << endl;
+	cout << delimiter << endl;
+	cout << "Расстояние между точками B и A:   " << distance(B, A) << endl;
+	cout << delimiter << endl;
+#endif // DISTANCE_CHECK
+
+#ifdef CONSTRUCTORS_CHECK
 	Point A;
 	cout << A.get_x() << "\t" << A.get_y() << endl;
 	A.print();
@@ -117,6 +159,24 @@ void main()
 
 	Point F(D);
 	F.print();
+#endif // CONSTRUCTORS_CHECK
+
+#ifdef ASSIGNMENT_CHECK_1
+//CopyAssignmet
+	Point A(2, 3);
+	A.print();
+	Point B = A; // Copy Constructor
+	B.print();
+	Point C;
+	C = B;		//Assignment Operator
+	C.print();
+#endif // ASSIGNMENT_CHECK_1
+
+	int a, b, c;
+	a = b = c = 0;
+
+	Point A, B, C;
+	A = B = C = Point (2, 3);
 }
 
 /*
