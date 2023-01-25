@@ -39,24 +39,24 @@ public:
 		this->y = 0;
 		cout << "1ArgConstructor" << this << endl;
 	}*/
-	Point(double x=0, double y=0)
+	Point(double x = 0, double y = 0)
 	{
 		this->x = x;
 		this->y = y;
 		cout << "Constructor\t" << this << endl;
-		
+
 	}
 	Point(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
 		cout << "Copy constructor\t" << this << endl;
-		
+
 	}
 	~Point()
 	{
 		cout << "Destructor" << "\t" << this << endl;
-		
+
 	}
 
 	//					Operators
@@ -73,13 +73,28 @@ public:
 	{
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
-		double distance = sqrt(x_distance*x_distance + y_distance * y_distance);
+		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
 		return distance;
 	}
 
 	void print()const
 	{
 		cout << "X= " << x << "\t" << "Y= " << y << endl;
+	}
+
+	Point& operator++() 
+	{
+		x++;
+		y++;
+		return *this;
+	}
+
+	Point operator++(int)
+	{
+		Point old = *this;
+		x++;
+		y++;
+		return old;
 	}
 };
 
@@ -91,11 +106,19 @@ double distance(const Point& A, const Point& B)
 	return distance;
 }
 
+Point operator+(const Point& left, const Point& right)
+{
+	Point res;
+	res.set_x(left.get_x() + right.get_x());
+	res.set_y(left.get_y() + right.get_y());
+	return res;
+}
+
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
 //#define CONSTRUCTORS_CHECK
 //#define ASSIGNMENT_CHECK_1
-#define ASSIGNMENT_CHECK_2
+//#define ASSIGNMENT_CHECK_2
 
 void main()
 {
@@ -172,11 +195,29 @@ void main()
 	C.print();
 #endif // ASSIGNMENT_CHECK_1
 
-	int a, b, c;
+#ifdef ASSIGNMENT_CHECK_2
+int a, b, c;
 	a = b = c = 0;
 
 	Point A, B, C;
 	A = B = C = Point (2, 3);
+	cout << delimiter << endl;
+#endif // ASSIGNMENT_CHECK_2
+
+
+	int a = 2;
+	int b = 3;
+	int c = a + b;
+
+	Point A(2, 3);
+	Point B(4, 5);
+	Point C = A + B;
+	C.print();
+	cout << delimiter << endl;
+
+	C++;
+	C.print();
+	cout << delimiter << endl;
 }
 
 /*
