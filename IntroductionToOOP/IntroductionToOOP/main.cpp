@@ -1,6 +1,7 @@
 //IntroductionToOOP
 #include<iostream>
 using namespace std;
+using std::cout;
 
 #define delimiter "\n -----------------------------------------------------------\n"
 
@@ -96,6 +97,15 @@ public:
 		y++;
 		return old;
 	}
+
+	Point& operator()(double x, double y)
+	{
+		set_x(x);
+		set_y(y);
+		return *this;
+	}
+
+	
 };
 
 double distance(const Point& A, const Point& B)
@@ -114,6 +124,38 @@ Point operator+(const Point& left, const Point& right)
 	return res;
 }
 
+bool operator==(const Point& left, const Point& right)
+{
+	/*if (left.get_x() == right.get_x() && left.get_y() == right.get_y())	
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}*/
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+
+}
+
+bool operator!=(const Point& left, const Point& right)
+{
+	return left.get_x() != right.get_x() && left.get_y() != right.get_y();
+}
+
+std::ostream& operator<<(std::ostream& os, const Point& obj)
+{
+	return os << "X = " << obj.get_x() << "\tY = " << obj.get_y();
+	
+}
+
+std::istream& operator>>(std::istream& in, Point& obj)
+{
+	double x, y;
+	in >> x >> y;
+	obj.set_x(x); obj.set_y(y);
+
+}
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
 //#define CONSTRUCTORS_CHECK
@@ -205,19 +247,36 @@ int a, b, c;
 #endif // ASSIGNMENT_CHECK_2
 
 
-	int a = 2;
+	/*int a = 2;
 	int b = 3;
 	int c = a + b;
 
 	Point A(2, 3);
 	Point B(4, 5);
+	
+
+	cout << (A == B) << endl;
+	cout << (A != B) << endl;
+	cout << delimiter << endl;
+
 	Point C = A + B;
 	C.print();
 	cout << delimiter << endl;
 
 	C++;
 	C.print();
-	cout << delimiter << endl;
+	cout << delimiter << endl;*/
+
+	Point A(2, 3);
+	A.print();
+	A(22, 33);
+	A.print();
+
+	cout << A << endl; 
+	
+	cin >> A;
+
+	cout << A << endl;
 }
 
 /*
