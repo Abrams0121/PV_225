@@ -169,8 +169,9 @@ Fraction operator*=(Fraction& left, Fraction right)
 
 Fraction operator==(Fraction left, Fraction right)
 {
-
+	return left == right;
 }
+
 //#define Constructors_check
 
 
@@ -213,4 +214,7 @@ void main()
 	A *= B;
 	A.print();
 	cout << delimiter << endl;
+
+	B == A;
+	B.print();
 }
