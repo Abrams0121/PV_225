@@ -131,6 +131,7 @@ public:
 		}
 	}
 
+	
 	void print()const
 	{
 		cout << endl;
@@ -171,6 +172,7 @@ int NOK(int A, int B)
 {
 	return (A * B) / NOD(A, B);
 }
+
 
 Fraction operator+(Fraction left, Fraction right)
 {
