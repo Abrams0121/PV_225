@@ -61,14 +61,14 @@ public:
 		cout << "1Argconstructor:\t" << this << endl;
 	}
 
-	Fraction(int numerator,int denumenator)
+	Fraction(int numerator, int denumenator)
 	{
 		this->integer = 0;
 		this->numerator = numerator;
 		this->set_denumerator(denumenator);
 		cout << "Constructor:\t\t" << this << endl;
 	}
-	
+
 	Fraction(int integer, int numerator, int denumenator)
 	{
 		this->integer = integer;
@@ -115,10 +115,10 @@ public:
 
 	Fraction& reduce()
 	{
-		
+
 		if ((numerator % 2 == 0) && (denumerator % 2 == 0))
 		{
-			 numerator /= 2, denumerator /= 2;
+			numerator /= 2, denumerator /= 2;
 		}
 		return *this;
 	}
@@ -134,7 +134,7 @@ public:
 			if (integer)cout << ")";
 		}
 		else if (integer == 0)cout << 0;
-		
+
 		cout << endl;
 	}
 };
@@ -158,7 +158,7 @@ int NOD(int A, int B)
 
 int NOK(int A, int B)
 {
-	return (A * B) / NOD(A,B);
+	return (A * B) / NOD(A, B);
 }
 
 Fraction operator+(Fraction left, Fraction right)
@@ -171,7 +171,7 @@ Fraction operator+(Fraction left, Fraction right)
 	return Fraction(
 		left.get_nemerator() * right.get_denumerator() + right.get_nemerator() * left.get_denumerator(),
 		left.get_denumerator() * right.get_denumerator()
-	
+
 	).to_proper();
 }
 
@@ -204,7 +204,7 @@ Fraction operator*(Fraction left, Fraction right)
 	);*/
 	/*result.set_numerator(left.get_nemerator() * right.get_nemerator());
 	result.set_denumerator(left.get_denumerator() * right.get_denumerator());*/
-	return Fraction 
+	return Fraction
 	(
 		left.get_nemerator() * right.get_nemerator(),
 		left.get_denumerator() * right.get_denumerator()
@@ -216,11 +216,11 @@ Fraction operator/(Fraction left, Fraction right)
 	/*left.to_improper();
 	right.to_improper();*/
 
-	
+
 	/*return Fraction
 	(
 		left.get_nemerator() * right.get_denumerator(),
-		right.get_nemerator() * left.get_denumerator() 
+		right.get_nemerator() * left.get_denumerator()
 	).to_proper();*/
 
 	return left * right.inverted();
@@ -231,7 +231,7 @@ Fraction operator/=(Fraction& left, Fraction right)
 	return left = left * right.inverted();
 }
 
-Fraction operator*=(Fraction& left, Fraction right) 
+Fraction operator*=(Fraction& left, Fraction right)
 {
 	return left = left * right;
 }
@@ -268,7 +268,7 @@ int main()
 	Fraction E = D;
 	E.print();
 #endif // Constructors_check
-	
+
 	Fraction A(2, 3, 7);
 	A.print();
 	cout << delimiter << endl;
