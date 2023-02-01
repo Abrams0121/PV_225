@@ -2,6 +2,8 @@
 #include<iostream>
 using namespace std;
 
+using std::cout;
+
 #define delimiter "________________________________________________________________________________________________________________________"
 class Fraction
 {
@@ -111,6 +113,15 @@ public:
 		return inverted;
 	}
 
+	Fraction& reduce()
+	{
+		
+		if ((numerator % 2 == 0) && (denumerator % 2 == 0))
+		{
+			 numerator /= 2, denumerator /= 2;
+		}
+		return *this;
+	}
 
 	void print()const
 	{
@@ -128,10 +139,63 @@ public:
 	}
 };
 
+int NOD(int A, int B)
+{
+	if ((A != 0) && (B != 0))
+	{
+		if (A > B)
+		{
+			A %= B;
+			NOD(A, B);
+		}
+		else
+		{
+			B %= A;
+			NOD(A, B);
+		}
+	} return A;
+}
+
+int NOK(int A, int B)
+{
+	return (A * B) / NOD(A,B);
+}
+
+Fraction operator+(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	right.reduce();
+	left.reduce();
+
+	return Fraction(
+		left.get_nemerator() * right.get_denumerator() + right.get_nemerator() * left.get_denumerator(),
+		left.get_denumerator() * right.get_denumerator()
+	
+	).to_proper();
+}
+
+Fraction operator-(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	right.reduce();
+	left.reduce();
+
+	int addFactorLeft, addFactorRight, nok = NOK(left.get_denumerator(), right.get_denumerator());
+	addFactorLeft = nok / left.get_denumerator();
+	addFactorRight = nok / right.get_denumerator();
+
+	return Fraction((left.get_nemerator() * addFactorLeft) - (right.get_nemerator() * addFactorRight), nok
+	).to_proper();
+}
+
 Fraction operator*(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
+	right.reduce();
+	left.reduce();
 
 	/*Fraction result
 	(
@@ -162,20 +226,23 @@ Fraction operator/(Fraction left, Fraction right)
 	return left * right.inverted();
 }
 
+Fraction operator/=(Fraction& left, Fraction right)
+{
+	return left = left * right.inverted();
+}
+
 Fraction operator*=(Fraction& left, Fraction right) 
 {
 	return left = left * right;
 }
 
-Fraction operator==(Fraction left, Fraction right)
-{
-	return left == right;
-}
+
+
 
 //#define Constructors_check
 
 
-void main()
+int main()
 {
 #ifdef Constructors_check
 	setlocale(LC_ALL, "");
@@ -195,26 +262,31 @@ void main()
 	E.print();
 #endif // Constructors_check
 	
-	Fraction A(2, 3, 4);
+	Fraction A(2, 3, 7);
 	A.print();
 	cout << delimiter << endl;
 
-	Fraction B(3, 4, 5);
+	Fraction B(3, 4, 10);
 	B.print();
 	cout << delimiter << endl;
 
-	Fraction C = A * B;
+	/*Fraction C = A * B;
 	C.print();
 	cout << delimiter << endl;
 
-	/*Fraction D = A / B;
+	Fraction D = A / B;
 	D.print();
-	cout << delimiter << endl;*/
+	cout << delimiter << endl;
 
 	A *= B;
 	A.print();
 	cout << delimiter << endl;
 
-	B == A;
+	B = A;
 	B.print();
+	cout << delimiter << endl;*/
+
+	Fraction D = B + A;
+	D.print();
+	cout << delimiter << endl;
 }
