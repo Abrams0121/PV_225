@@ -269,11 +269,11 @@ int main()
 	E.print();
 #endif // Constructors_check
 
-	Fraction A(2, 3, 7);
+	Fraction A(2, 3, 4);
 	A.print();
 	cout << delimiter << endl;
 
-	Fraction B(3, 4, 10);
+	Fraction B(3, 4, 5);
 	B.print();
 	cout << delimiter << endl;
 
@@ -293,7 +293,12 @@ int main()
 	B.print();
 	cout << delimiter << endl;*/
 
-	Fraction D = B + A;
+	/*Fraction D = B + A;
 	D.print();
-	cout << delimiter << endl;
+	cout << delimiter << endl;*/
+
+	A *= B;
+	A.print();
+	A /= B;
+	A.print();
 }

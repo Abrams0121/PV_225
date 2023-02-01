@@ -5,6 +5,9 @@ using namespace std;
 using std::cout;
 
 #define delimiter "________________________________________________________________________________________________________________________"
+
+int NOD(int A, int B);
+
 class Fraction
 {
 
@@ -61,14 +64,14 @@ public:
 		cout << "1Argconstructor:\t" << this << endl;
 	}
 
-	Fraction(int numerator,int denumenator)
+	Fraction(int numerator, int denumenator)
 	{
 		this->integer = 0;
 		this->numerator = numerator;
 		this->set_denumerator(denumenator);
 		cout << "Constructor:\t\t" << this << endl;
 	}
-	
+
 	Fraction(int integer, int numerator, int denumenator)
 	{
 		this->integer = integer;
@@ -115,12 +118,17 @@ public:
 
 	Fraction& reduce()
 	{
-		
-		if ((numerator % 2 == 0) && (denumerator % 2 == 0))
+
+		/*if ((numerator % 2 == 0) && (denumerator % 2 == 0))
 		{
-			 numerator /= 2, denumerator /= 2;
+			numerator /= 2, denumerator /= 2;
+		}*/
+		if ((numerator % NOD(numerator, denumerator) == 0) && (denumerator % NOD(numerator, denumerator) == 0))
+		{
+			numerator /= NOD(numerator, denumerator);
+			denumerator /= NOD(numerator, denumerator);
+			return *this;
 		}
-		return *this;
 	}
 
 	void print()const
@@ -134,44 +142,46 @@ public:
 			if (integer)cout << ")";
 		}
 		else if (integer == 0)cout << 0;
-		
+
 		cout << endl;
 	}
 };
 
 int NOD(int A, int B)
 {
+	int nod = 1;
 	if ((A != 0) && (B != 0))
 	{
 		if (A > B)
 		{
 			A %= B;
-			NOD(A, B);
+			nod = A;
+			nod = NOD(A, B);
 		}
 		else
 		{
 			B %= A;
-			NOD(A, B);
+			nod = B;
+			nod = NOD(A, B);
 		}
-	} return A;
+	} return nod;
 }
 
 int NOK(int A, int B)
 {
-	return (A * B) / NOD(A,B);
+	return (A * B) / NOD(A, B);
 }
 
 Fraction operator+(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
-	right.reduce();
-	left.reduce();
+	
 
 	return Fraction(
 		left.get_nemerator() * right.get_denumerator() + right.get_nemerator() * left.get_denumerator(),
 		left.get_denumerator() * right.get_denumerator()
-	
+
 	).to_proper();
 }
 
@@ -179,8 +189,7 @@ Fraction operator-(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
-	right.reduce();
-	left.reduce();
+	
 
 	int addFactorLeft, addFactorRight, nok = NOK(left.get_denumerator(), right.get_denumerator());
 	addFactorLeft = nok / left.get_denumerator();
@@ -194,8 +203,7 @@ Fraction operator*(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
-	right.reduce();
-	left.reduce();
+	
 
 	/*Fraction result
 	(
@@ -204,11 +212,11 @@ Fraction operator*(Fraction left, Fraction right)
 	);*/
 	/*result.set_numerator(left.get_nemerator() * right.get_nemerator());
 	result.set_denumerator(left.get_denumerator() * right.get_denumerator());*/
-	return Fraction 
+	return Fraction
 	(
 		left.get_nemerator() * right.get_nemerator(),
 		left.get_denumerator() * right.get_denumerator()
-	).to_proper();
+	).to_proper().reduce();
 }
 
 Fraction operator/(Fraction left, Fraction right)
@@ -216,11 +224,11 @@ Fraction operator/(Fraction left, Fraction right)
 	/*left.to_improper();
 	right.to_improper();*/
 
-	
+
 	/*return Fraction
 	(
 		left.get_nemerator() * right.get_denumerator(),
-		right.get_nemerator() * left.get_denumerator() 
+		right.get_nemerator() * left.get_denumerator()
 	).to_proper();*/
 
 	return left * right.inverted();
@@ -231,7 +239,7 @@ Fraction operator/=(Fraction& left, Fraction right)
 	return left = left * right.inverted();
 }
 
-Fraction operator*=(Fraction& left, Fraction right) 
+Fraction operator*=(Fraction& left, const Fraction& right)
 {
 	return left = left * right;
 }
@@ -268,12 +276,12 @@ int main()
 	Fraction E = D;
 	E.print();
 #endif // Constructors_check
-	
-	Fraction A(2, 3, 7);
+
+	Fraction A(2, 3, 4);
 	A.print();
 	cout << delimiter << endl;
 
-	Fraction B(3, 4, 10);
+	Fraction B(3, 4, 5);
 	B.print();
 	cout << delimiter << endl;
 
@@ -293,7 +301,12 @@ int main()
 	B.print();
 	cout << delimiter << endl;*/
 
-	Fraction D = B + A;
+	/*Fraction D = B + A;
 	D.print();
-	cout << delimiter << endl;
+	cout << delimiter << endl;*/
+
+	A *= B;
+	A.print();
+	A /= B;
+	A.print();
 }
