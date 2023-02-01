@@ -237,7 +237,14 @@ Fraction operator*=(Fraction& left, Fraction right)
 }
 
 
-
+Fraction operator+=(Fraction& left, Fraction right)
+{
+	return left = left + right;
+}
+Fraction operator-=(Fraction& left, Fraction right)
+{
+	return left = left + right;
+}
 
 //#define Constructors_check
 
