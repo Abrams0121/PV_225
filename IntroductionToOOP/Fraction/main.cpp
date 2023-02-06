@@ -5,6 +5,8 @@ using namespace std;
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
 Fraction operator/(const Fraction& left, const Fraction& right);
+int find_digit(double a, int digit);
+int find_digit(double a);
 
 class Fraction
 {
@@ -50,6 +52,17 @@ public:
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
+		cout << "1ArgConstructor:\t" << this << endl;
+	}
+
+	Fraction(double integer_fraction)
+	{
+		int integer = integer_fraction;
+		integer_fraction -= integer;
+		int digit = find_digit(integer_fraction);
+		this->integer = integer;
+		this->numerator = (integer_fraction*digit);
+		this->denominator = digit;
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
@@ -99,21 +112,42 @@ public:
 
 	Fraction& operator++()
 	{
-		 this->integer += 1;
+		 this->integer++;
 		 return *this;
 	}
 
 	Fraction& operator--()
 	{
-		this->integer -= 1;
+		this->integer--;
 		return *this;
+	}
+
+	Fraction& operator++(int)
+	{
+		Fraction old = *this;
+		this->integer++;
+		return old;
+	}
+
+	Fraction& operator--(int)
+	{
+		Fraction old = *this;
+		this->integer--;
+		return old;
 	}
 	//    Type-cast operators
 	operator int()const
 	{
 		return Fraction(*this).to_proper().integer;
 	}
-
+	operator double()const
+	{
+		double res;
+		Fraction temp(*this);
+		temp.to_proper();
+		return ((res = ((double)temp.numerator / (double)temp.denominator)) += (double)temp.integer);
+		
+	}
 	//				Methods:
 	Fraction& to_improper()
 	{
@@ -164,6 +198,38 @@ public:
 		cout << endl;
 	}
 };
+
+int find_digit(double a)
+{
+	
+	int digit = 10;
+	int ab = a *= (double)digit;
+	if (a - ab == 0)
+	{
+		return digit;
+	}
+	else
+	{
+		digit *= 10;
+		find_digit(a, digit);
+		return digit;
+	}
+}
+
+int find_digit(double a,int digit)
+{
+	int ab = a *= (double)digit;
+	if (a - ab == 0)
+	{
+		return digit;
+	}
+	else
+	{
+		digit *= 10;
+		find_digit(a, digit); 
+		return digit;
+	}
+}
 
 Fraction operator*(Fraction left, Fraction right)
 {
@@ -246,9 +312,49 @@ bool operator<=(const Fraction& left, const Fraction& right)
 {
 	return left < right || left == right;
 }
+
+// cout-cin operators
+
+std::ostream& operator<<(std::ostream& out, Fraction& obj)
+{
+
+	if (obj.get_integer())out << obj.get_integer();
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())out << "(";
+		out << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())out << ")";
+	}
+	else if (obj.get_integer() == 0)out << 0;
+	out << endl;
+
+	return out;
+	
+}
+
+
+std::istream& operator>>(std::istream& in, Fraction& obj)
+{
+	int a, b, c;
+	cout << "denumenator: "; cin >> a;
+	cout << "numerator: "; cin >> b;
+	cout << "integer: "; cin >> c;
+	obj.set_denominator(a); obj.set_numerator(b); obj.set_integer(c);
+	return in;
+	
+}
+
+
+
 //#define CONSTRUCTORS_CHECK
 //#define ARIFMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS
+//#define binary_operators_and_CIN
+
+//#define HOME_WORK_1
+#define HOME_WORK_2
+
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -295,14 +401,39 @@ void main()
 cout << (Fraction(3,1,2) < Fraction(35,11)) << endl;
 #endif // COMPARISON_OPERATORS
 
-
+#ifdef binary_operators_and_CIN
 Fraction  A(1, 3, 4);
 ++A;
 A.print();
 --A;
 A.print();
+
+A++;
+A.print();
+A--;
+A.print();
 int a = A;
 
+Fraction B;
+cin >> B;
 cout << a << endl;
+#endif // DEBUG
+
+
+
+
+#ifdef HOME_WORK_1
+Fraction B(2, 3, 4);
+double b = B;
+
+cout << b << endl;
+#endif // HOME_WORK_1
+
+#ifdef HOME_WORK_2
+Fraction B = 2.75;
+B.reduce();
+cout << B << endl;
+#endif // HOME_WORK_2
+
 	
 }

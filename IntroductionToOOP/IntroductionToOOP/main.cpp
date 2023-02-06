@@ -154,7 +154,6 @@ std::istream& operator>>(std::istream& in, Point& obj)
 	double x, y;
 	in >> x >> y;
 	obj.set_x(x); obj.set_y(y);
-
 }
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
