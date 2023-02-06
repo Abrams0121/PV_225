@@ -63,6 +63,7 @@ public:
 		this->integer = integer;
 		this->numerator = (integer_fraction*digit);
 		this->denominator = digit;
+		reduce();
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
@@ -136,11 +137,11 @@ public:
 		return old;
 	}
 	//    Type-cast operators
-	operator int()const
+ 	explicit operator int()const
 	{
 		return Fraction(*this).to_proper().integer;
 	}
-	operator double()const
+	explicit operator double()const
 	{
 		double res;
 		Fraction temp(*this);
@@ -430,8 +431,7 @@ cout << b << endl;
 #endif // HOME_WORK_1
 
 #ifdef HOME_WORK_2
-Fraction B = 2.75;
-B.reduce();
+Fraction B = 2.7644444444444444444444455566666666;
 cout << B << endl;
 #endif // HOME_WORK_2
 
