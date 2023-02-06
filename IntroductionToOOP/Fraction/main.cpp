@@ -94,8 +94,20 @@ public:
 	Fraction& operator/=(const Fraction& other)
 	{
 		return *this = *this / other;
+
 	}
 
+	Fraction& operator++()
+	{
+		 this->integer += 1;
+		 return *this;
+	}
+
+	Fraction& operator--()
+	{
+		this->integer -= 1;
+		return *this;
+	}
 	//    Type-cast operators
 	operator int()const
 	{
@@ -285,6 +297,9 @@ cout << (Fraction(3,1,2) < Fraction(35,11)) << endl;
 
 
 Fraction  A(1, 3, 4);
+++A;
+A.print();
+--A;
 A.print();
 int a = A;
 
