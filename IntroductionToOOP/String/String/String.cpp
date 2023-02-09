@@ -26,6 +26,11 @@ public:
         this->str = new char[size] {};
         cout << "DefaultConstructor:\t" << this << endl;
     }
+    String(const char* str) :String(strlen(str) + 1)
+    {
+        for (int i = 0; i < size; i++)this->str[i] = str[i];
+        cout << "1ArgConstructor" << this << endl;        
+    }
 
     ~String()
     {
