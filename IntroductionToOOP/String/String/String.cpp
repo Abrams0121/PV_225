@@ -72,6 +72,7 @@ int main()
     String str1 = '4';
     str1.print();
     String str4();
+    String str2{ 4434 };
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
