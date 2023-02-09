@@ -33,6 +33,15 @@ public:
         cout << "Destructor:\t" << this << endl;
     }
 
+    String(String&& other)noexcept
+    {
+        this->size = other.size;
+        this->str = other.str;
+        other.size = 0;
+        other.str = nullptr;
+        cout << "Move constructor:\t" << this << endl;
+    }
+
     //          methods:
 
     void print()
@@ -42,6 +51,18 @@ public:
     }
 
 
+    // operators
+
+    String& operator=(String&& other)
+    {
+        this->size = other.size;
+        this->str = other.str;
+        this->size = 0;
+        this->str = nullptr;
+        cout << "MoveAssigment:\t" << this << endl;
+        return *this;
+    }
+
 
 };
 
@@ -50,6 +71,7 @@ int main()
     setlocale(LC_ALL, "");
     String str1 = '4';
     str1.print();
+    String str4();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
