@@ -4,6 +4,10 @@
 #include <iostream>
 using namespace std;
 
+
+/// <summary>
+/// Обьявление класса - CLASS DECLARATION
+/// </summary>
 class String;
 String operator+(const String& left, const String& right);
 
@@ -47,6 +51,13 @@ public:
     void print();
 
 };
+
+
+/// <summary>
+/// CLASS DECLARATION END
+/// CLASS DEFINITION
+/// </summary>
+
 
 int String::get_size()const
 {
@@ -167,6 +178,11 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 {
     return os << obj.get_str();
 }
+
+/// <summary>
+/// CLASS DEFINITION END
+/// </summary>
+
 
 int main()
 {
