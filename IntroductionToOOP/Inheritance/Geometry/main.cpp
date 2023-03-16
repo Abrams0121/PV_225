@@ -5,6 +5,7 @@ using namespace std;
 
 enum Color
 {
+    blue = 0x00ff0000,
     console_blue = 0x99,
     console_green = 0xAA,
     console_red = 0xCC,
@@ -12,13 +13,16 @@ enum Color
 
 };
 
-namespace Geimetry
+namespace Geometry
 {
 
 
     class Shape
     {
-        Color color;
+
+        
+        
+
 
     public:
         Shape(Color color) :color(color) {}
@@ -27,15 +31,30 @@ namespace Geimetry
         virtual double get_area()const = 0;
         virtual double get_perimeter()const = 0;
         virtual void draw()const = 0;
+    
+    protected:
+        Color color;
+        const int MIN_START_POSITION_X = 50;
+        const int MIN_START_POSITION_Y = 50;
 
-
+        const int MAX_START_POSITION_X = 300;
+        const int MAX_START_POSITION_Y = 300;
+        
 
     };
 
     class Rectangle : Shape
     {
+        const int MIN_LENGHT = 50;
+        const int MIN_WIDHT = 50;
+
+        const int MAX_LENGHT = 50;
+        const int MAX_WIDTH = 50;
 
         double A_D_Side, B_C_Side;
+
+        int rect_start_pos_x, rect_start_pos_y;
+        
 
     public:
 
@@ -54,22 +73,22 @@ namespace Geimetry
             POINT op;
             HWND hWnd = GetConsoleWindow();
             HDC hDC = GetDC(hWnd);
-            SelectObject(hDC, GetStockObject(WHITE_PEN));
+
+            HPEN hpen = CreatePen(PS_SOLID, 1,color);
+            HBRUSH hbrush = CreateSolidBrush(blue);
+
+            SelectObject(hDC, hpen);
             SetDCPenColor(hDC, RGB(0, 0, 255));
 
-            int x = this->A_D_Side * 38;
-            int y = this->B_C_Side * 38;
-
-            int first_destanation_x = 50 + x, first_destanation_y = 50;
-            int second_destanation_x = first_destanation_x, second_destanation_y = first_destanation_y + y;
-            int third_destanation_x = first_destanation_x - x, third_destanation_y = second_destanation_y;
+            
 
             MoveToEx(hDC, 50, 50, &op);
-            LineTo(hDC, first_destanation_x, first_destanation_y);
-            LineTo(hDC, second_destanation_x, second_destanation_y);
-            LineTo(hDC, third_destanation_x, third_destanation_y);
-            LineTo(hDC, 50, 50);
+            
+            ::Rectangle(hDC, 0, 0, 0, 0);
 
+
+            DeleteObject(hpen);
+            DeleteObject(hbrush);
 
             ReleaseDC(hWnd, hDC);
             std::cin.get();
@@ -87,15 +106,34 @@ namespace Geimetry
 
         void set_A_D_Side(double A_D_Side)
         {
+            if (A_D_Side < MIN_WIDHT)this->A_D_Side = MIN_WIDHT;
+            if (A_D_Side > MAX_WIDTH)this->A_D_Side = MAX_WIDTH;
+            
             this->A_D_Side = A_D_Side;
         }
 
         void set_B_C_Side(double B_C_Side)
         {
+            if (B_C_Side < MIN_LENGHT)B_C_Side = MIN_LENGHT;
+            if (B_C_Side > MAX_LENGHT)B_C_Side = MAX_LENGHT;
+
             this->B_C_Side = B_C_Side;
         }
 
-        Rectangle(double A_D_Side, double B_C_Side) : Shape(console_blue)
+        void set_rect_start_pos_x(int rect_start_pos_x)
+        {
+            if (rect_start_pos_x < MIN_START_POSITION_X)rect_start_pos_x = MIN_START_POSITION_X;
+            if (rect_start_pos_x > MAX_START_POSITION_X)rect_start_pos_x = MAX_START_POSITION_X;
+            this->rect_start_pos_x = rect_start_pos_x;
+        }
+        void set_rect_start_posx_y(int rect_start_pos_y)
+        {
+            if (rect_start_pos_y < MIN_START_POSITION_Y)rect_start_pos_y = MIN_START_POSITION_Y;
+            if (rect_start_pos_y > MAX_START_POSITION_Y)rect_start_pos_y = MAX_START_POSITION_Y;
+            this->rect_start_pos_y = rect_start_pos_y;
+        }
+
+        Rectangle(int start_pos_x,int start_pos_y,double A_D_Side, double B_C_Side) : Shape(console_blue)
         {
             set_A_D_Side(A_D_Side);
             set_B_C_Side(B_C_Side);
@@ -108,7 +146,19 @@ namespace Geimetry
         }
 
     };
+
+
+    class Rect
+    {
+
+   
+
+    };
+
+    
 }
+
+
 
 
 void main()
@@ -126,7 +176,7 @@ void main()
     ReleaseDC(hWnd, hDC);
     std::cin.get();*/
     
-    Geimetry::Rectangle rect1(6.32, 4.43);
+    Geometry::Rectangle rect1(0,0,6.32, 4.43);
 
     rect1.draw();
 }
