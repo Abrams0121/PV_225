@@ -21,13 +21,13 @@ template<typename T>int Element<T>::count = 0;	//Инициализируем статическу перем
 template<typename T>Element<T>::Element(T Data, Element<T>* pNext) :Data(Data), pNext(pNext)
 {
     count++;
-    cout << "EConstructor:\t" << this << endl;
+    //cout << "EConstructor:\t" << this << endl;
 }
 
 template<typename T>Element<T>::~Element()
 {
     count--;
-    cout << "EDestructor:\t" << this << endl;
+    //cout << "EDestructor:\t" << this << endl;
 }
 
 //////////////////////////////////////Iterator////////////////////////////////////////////
@@ -70,6 +70,16 @@ T& Iterator<T>::operator*()
     return Temp->Data;
 }
 
+template<typename T>const Iterator<T> ForwardList<T>::begin() const
+{
+    return Head;
+}
+
+template<typename T>const Iterator<T> ForwardList<T>::end() const
+{
+    return nullptr;
+}
+
 //////////////////////////////////////ForvardList////////////////////////////////////////////
 template<typename T>Iterator<T> ForwardList<T>::begin()
 {
@@ -99,6 +109,13 @@ template<typename T>ForwardList<T>::ForwardList(const std::initializer_list<T>& 
         push_back(*it);
     }
 }
+
+template<typename T>
+ForwardList<T>::ForwardList(const ForwardList& other)
+{
+    for (Element<T>* Temp = other.Head; Temp; Temp = Temp->pNext)push_back(Temp->Data);
+}
+
 template<typename T>ForwardList<T>::~ForwardList()
 {
     while (Head)pop_front();
@@ -194,6 +211,42 @@ template<typename T>void ForwardList<T>::print()const
     cout << "Общее количество элементов: " << Element::count << endl;
 }
 
+
+
+
+template<typename T>
+ForwardList<T> operator+(const ForwardList<T>& left, const ForwardList<T>& right)
+{
+    ForwardList<T> cat;
+    for (Iterator<T> it = left.begin(); it != left.end(); ++it) cat.push_back(*it);
+    for (Iterator<T> it = right.begin(); it != right.end(); ++it)cat.push_back(*it);
+    return cat;
+}
+
+template<typename T>void ForwardList<T>::reverse()
+{
+    ForwardList<T> temp_list;
+    for (Iterator<T> IT = this->begin(); IT != this->end(); ++IT)temp_list.push_front(*IT);
+    this->Head = temp_list.Head;
+    temp_list.Head = nullptr;
+   
+    /*for (int i = 0 ; i > this->size;i++)
+    {
+        if (Temp)
+        {
+            while (Temp->pNext->pNext)
+            {
+                Temp = Temp->pNext;
+                temp_int = Temp->Data;
+            }
+            Temp_2->Data = temp_int;
+            Temp_2 = Temp_2->pNext;
+            temp_list.pop_back();
+            Temp = temp_list.Head;
+        }
+    }*/
+
+}
 
 /////////////////                                   CLASS DEFENITION END                            ///////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

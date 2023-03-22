@@ -48,6 +48,8 @@ public:
 
     bool operator!=(const Iterator<T>& other)const;
 
+    
+
     T& operator*();
 
 
@@ -58,6 +60,11 @@ template <typename T>class ForwardList	//Forward - односв€зный, однонаправленный
     Element<T>* Head;	//√олова списка - содержит указатель на нулевой элемент списка
     int size;
 public:
+
+    const Iterator<T> begin()const;
+
+    const Iterator<T> end()const;
+
     Iterator<T> begin();
 
     Iterator<T> end();
@@ -65,6 +72,8 @@ public:
     ForwardList();
 
     ForwardList(const std::initializer_list<T>& il);
+
+    ForwardList(const ForwardList& other);
 
     ~ForwardList();
 
@@ -87,6 +96,10 @@ public:
     //					Methods:
     void print()const;
 
+
+    
+
+    void reverse();
 };
 
 

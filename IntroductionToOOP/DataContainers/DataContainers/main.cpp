@@ -4,7 +4,7 @@
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
-//#define HOME_WORK_1
+#define HOME_WORK_1
 
 void main()
 {
@@ -53,7 +53,7 @@ void main()
 #endif // RANGE_BASED_FOR_ARRAY
 
 #ifdef HOME_WORK_1
-    ForwardList list = { 3, 5, 8, 13, 21 };
+    ForwardList<int> list = { 3, 5, 8, 13, 21 };
     //list.print();
     for (int i : list)
     {
@@ -61,16 +61,37 @@ void main()
     }
     cout << endl;
 
-    ForwardList list2 = { 34, 55, 89 };
+    ForwardList<int> list2 = { 34, 55, 89 };
     for (int i : list2)cout << i << tab; cout << endl;
 
-    ForwardList list3 = list + list2;
-    for (int i : list3)cout << i << tab; cout << end; 
+    ForwardList<int> list3 = list + list2;
+    for (int i : list3)cout << i << tab; cout << endl; 
 #endif // HOME_WORK_1
 
-    ForwardList<int> list = { 3, 5, 8, 13, 21 };
-    for (int i : list)cout << i << tab; cout << endl;
+    /*ForwardList<int> list = { 3, 5, 8, 13, 21 };
+    list.reverse();
+    for (int i : list)cout << i << tab; cout << endl;*/
 
-    ForwardList < std::string > s_list = { "Хорошо","живет","Сазан" };
-    for (std::string i : s_list)cout << i << tab; cout << endl;
+    
+    /*for (int i : list)cout << i << tab; cout << endl;*/
+    /*ForwardList < std::string > s_list = { "Хорошо","живет","Сазан" };
+    s_list.reverse();
+    for (std::string i : s_list)cout << i << tab; cout << endl;*/
+
+
+    /*int n;
+    cout << "Введите рaзмер списка: ";
+    cin >> n;
+    
+    ForwardList<int> list;
+    for (int i = 0; i < n; i++)
+    {
+        int data = rand();
+        list.push_front(data);
+        cout << data << endl;
+    }
+    cout << "Cписок заполнен"<<endl;
+    ForwardList<int> list_2 = list;*/
+   
+    
 };
