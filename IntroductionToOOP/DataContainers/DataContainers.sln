@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataContainers", "DataContainers\DataContainers.vcxproj", "{E3955A33-DEBA-42CF-A8C5-3DDB87E18256}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForvardList", "DataContainers\DataContainers.vcxproj", "{E3955A33-DEBA-42CF-A8C5-3DDB87E18256}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryTree", "BinaryTree\BinaryTree.vcxproj", "{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{E3955A33-DEBA-42CF-A8C5-3DDB87E18256}.Release|x64.Build.0 = Release|x64
 		{E3955A33-DEBA-42CF-A8C5-3DDB87E18256}.Release|x86.ActiveCfg = Release|Win32
 		{E3955A33-DEBA-42CF-A8C5-3DDB87E18256}.Release|x86.Build.0 = Release|Win32
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Debug|x64.ActiveCfg = Debug|x64
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Debug|x64.Build.0 = Debug|x64
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Debug|x86.ActiveCfg = Debug|Win32
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Debug|x86.Build.0 = Debug|Win32
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Release|x64.ActiveCfg = Release|x64
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Release|x64.Build.0 = Release|x64
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Release|x86.ActiveCfg = Release|Win32
+		{58ACAF90-05EC-4D7F-B4B6-6F6A54D54A94}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
