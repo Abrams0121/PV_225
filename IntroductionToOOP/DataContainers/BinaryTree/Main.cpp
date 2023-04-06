@@ -1,24 +1,29 @@
 #include <iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
+
+#define DEBUG
 
 #define Delimeter "-----------------------------------------------------------------------------"
 
 class Tree
 {
-    class ELement
+    class Element
     {
         int Data;
-        ELement* pLeft;
-        ELement* pRight;
+        Element* pLeft;
+        Element* pRight;
     public:
-        ELement(int Data, ELement* pLeft = nullptr, ELement* pRight = nullptr)
+        Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr)
             :Data(Data),pLeft(pLeft),pRight(pRight)
         {
             cout << "EConstructor\t" << this << endl;
         }
-        ~ELement()
+        ~Element()
         {
-            cout << "EDestructor\t" << this << endl;
+           cout << "EDestructor\t" << this << endl;
         }
 
         friend class Tree;
@@ -26,12 +31,12 @@ class Tree
     }*Root;
 
 public:
-    const ELement* getRoot()const
+    const Element* getRoot()const
     {
         return Root;
     }
 
-    ELement* getRoot()
+    Element* getRoot()
     {
         return Root;
     }
@@ -41,38 +46,86 @@ public:
         cout << "TConstructro\t" << this << endl;
     }
 
-    ~Tree()
+    Tree(const std::initializer_list<int>& il) :Tree()
     {
-        
-        cout << "TDestructor\t" << this << endl;
+        for (int i : il)insert(i);
     }
 
-
-    void insert(int Data,ELement* Root)
+    Tree(const Tree& Other) :Tree()
     {
-        if (!this->Root)this->Root = new ELement(Data);
+        Copy(Other.Root);
+    }
+    ~Tree()
+    {
+        Clear();
+        cout << "TDestructor\t" << this << endl;
+    }
+    
+
+
+    void insert(int Data)
+    {
+        insert(Data, Root);
+    }
+    void Erase(int Data)
+    {
+        Erase(Data, Root);
+    }
+    int MinValue()const
+    {
+        return MinValue(Root);
+    }
+    int MaxValue()const
+    {
+       return MaxValue(Root);
+    }
+    int Sum()const
+    {
+       return Sum(Root);
+    }
+    int Count()const
+    {
+       return  Count(Root);
+    }
+    int Avg()const
+    {
+        return (double)Sum(Root) / Count(Root);
+    }
+    int Depth()const
+    {
+        return Depth(Root);
+    }
+    void Print()const
+    {
+        Print(Root);
+        cout << endl;
+    }
+
+    void Clear()
+    {
+        Clear(Root);
+    }
+private:
+
+    void insert(int Data,Element* Root)
+    {
+        if (!this->Root)this->Root = new Element(Data);
         if (Root == nullptr)
         {
             return;
         } 
         if (Data < Root->Data)
         {
-            if (Root->pLeft == nullptr)Root->pLeft = new ELement(Data);
+            if (Root->pLeft == nullptr)Root->pLeft = new Element(Data);
             else insert(Data, Root->pLeft);
         }
         else
         {
-            if (Root->pRight == nullptr)Root->pRight = new ELement(Data);
+            if (Root->pRight == nullptr)Root->pRight = new Element(Data);
             else insert(Data, Root->pRight);
         }
     }
-
-    void pop_back(ELement* Root)
-    {
-
-    }
-
-    void erase(int Data,ELement* Root)
+    /*void erase(int Data,Element* Root)
     {
         if (Root == nullptr)
         {
@@ -97,36 +150,36 @@ public:
             erase(Data, Root->pRight);
         }
         else return;
-    }
+    }*/
 
-    int max_value(ELement const* Root)
+    int MaxValue(Element const* Root)const
     {
         if (Root != nullptr)
         {
 
             if (Root->pRight != nullptr)
             {
-                max_value(Root->pRight);
+                MaxValue(Root->pRight);
             }
             else return Root->Data;
         }
     }
 
-    int min_value(ELement const* Root)
+    int MinValue(Element const* Root)const
     {
         if (Root != nullptr)
         {
           
             if (Root->pLeft != nullptr)
             {
-                min_value(Root->pLeft);
+                MinValue(Root->pLeft);
             }
             else return Root->Data;
 
         }
     }
 
-    int Count(ELement const* Root,int count = 1)
+    int Count(Element const* Root,int count = 1)const
     {
         if (Root != nullptr)
         {
@@ -146,7 +199,7 @@ public:
         return count;
     }
 
-    int Summ(ELement const* Root, int summ = 0)
+    int Sum(Element const* Root, int summ = 0)const
     {
 
         if (Root != nullptr)
@@ -154,13 +207,13 @@ public:
             summ += Root->Data;
             if (Root->pRight != nullptr)
             {
-                summ = Summ(Root->pRight, summ);
+                summ = Sum(Root->pRight, summ);
             }
 
 
             if (Root->pLeft != nullptr)
             {
-               summ = Summ(Root->pLeft, summ);
+               summ = Sum(Root->pLeft, summ);
             }
 
         }
@@ -168,13 +221,10 @@ public:
         return summ;
     }
 
-    int Avg(ELement const* Root, int avg = 0)
-    {
-        return Summ(Root) / Count(Root);
-    }
+   
 
 
-    int Depth(ELement const* Root, int depth = 1)
+    /*int Depth(ELement const* Root, int depth = 1)const
     {
         if (Root != nullptr)
         {
@@ -190,8 +240,20 @@ public:
         }
         else return 0;
         return depth;
-    }
+    }*/
 
+
+    int Depth(Element* Root)const
+    {
+
+        if (Root == nullptr)return 0;
+
+        int l_depth = Depth(Root->pLeft) + 1;
+        int r_depth = Depth(Root->pRight) + 1;
+        return l_depth > r_depth ? l_depth : r_depth;
+        /*if (Depth(Root->pLeft) + 1 > Depth(Root->pRight) + 1)return Depth(Root->pLeft) + 1;
+        else return Depth(Root->pRight) + 1;*/
+    }
 
     /*void print(ELement const* Root)
     {
@@ -215,13 +277,57 @@ public:
         }
     }*/
 
-    void print(ELement const* Root,int depth = 0)
+    void Clear(Element* Root)
+    {
+        if (Root == nullptr)return;
+        Clear(Root->pLeft);
+        Clear(Root->pRight);
+        delete Root;
+    }
+
+    void Erase(int Data, Element* Root)
+    {
+        if (!Root) return;
+        Erase(Data, Root->pLeft);
+        Erase(Data, Root->pRight);
+        if (Data == Root->Data)
+        {
+            if (isLeaf(Root))
+            {
+                delete Root;
+                Root = nullptr;
+            }
+            else
+            {
+                if (Count(Root->pLeft)>Count(Root->pRight))
+                {
+                    Root->Data = MaxValue(Root->pLeft);
+                    Erase(MaxValue(Root->pLeft), Root->pRight);
+                }
+                else
+                {
+                    Root->Data = MinValue(Root->pLeft);
+                    Erase(MinValue(Root->pLeft), Root->pRight);
+                }
+            }
+
+        }
+    }
+
+    void Copy(Element* Root)
+    {
+        if (!Root)return;
+        insert(Root->Data, this->Root);
+        Copy(Root->pLeft);
+        Copy(Root->pRight);
+    }
+    void Print(Element const* Root,int depth = 0)const
     {
         const int TAB_SIZE = 6;
         const std::string tabOffset(depth * TAB_SIZE, ' ');
 
         if (Root->pLeft) {
-            print(Root->pLeft,depth + 1);
+            Print(Root->pLeft,depth + 1);
         }
         else if (!this->isLeaf(Root)) {
             std::cout << tabOffset << std::string(TAB_SIZE, ' ') << "NULL" << std::endl;
@@ -236,14 +342,14 @@ public:
         std::cout << std::endl;
 
         if (Root->pRight) {
-            print(Root->pRight,depth + 1);
+            Print(Root->pRight,depth + 1);
         }
         else if (!this->isLeaf(Root)) {
             std::cout << tabOffset << std::string(TAB_SIZE, ' ') << "NULL" << std::endl;
         }
     }
 
-    bool isLeaf(ELement const* Root)const
+    bool isLeaf(Element const* Root)const
     {
         return !Root->pLeft && !Root->pRight;
     }
@@ -258,41 +364,60 @@ public:
     }*/
 };
 
-
+//#define Check1
+#define DepthCheck
 
 void main()
 {
     
+
+
+
+
     srand(time(NULL));
     setlocale(LC_ALL, "");
+
+#ifdef Check1
     int n,D;
     cout << "Введите размер дерева: ", cin >> n;
     Tree tree;
     for (int i = 0; i < n; i++)
     {
-        tree.insert(rand() % 100, tree.getRoot());
+        tree.insert(rand() % 100);
     }
     cout << "\t\t\tБЛОК КОНСТРУКТОРОВ\n";
     cout << Delimeter;
     cout << "\n\n";
-    tree.print(tree.getRoot());
+    /*tree.Print();
     cout << "\n\n ВВедите число: ";
     cin >> D;
-    tree.erase(D, tree.getRoot());
+    tree.erase(D);
     cout << "\n\n";
-    tree.print(tree.getRoot());
+    tree.Print();*/
     cout << "\n\n";
-    cout << "Минимальное: " << tree.min_value(tree.getRoot());
+    cout << "Минимальное: " << tree.MinValue();
     cout << "\n\n";
-    cout << "Максимальное: " << tree.max_value(tree.getRoot());
+    cout << "Максимальное: " << tree.MaxValue();
     cout << "\n\n";
-    cout << "Колличество: " << tree.Count(tree.getRoot());
+    cout << "Колличество: " << tree.Count();
     cout << "\n\n";
-    cout << "Сумма: " << tree.Summ(tree.getRoot());
+    cout << "Сумма: " << tree.Sum();
     cout << "\n\n";
-    cout << "Среднее: " << tree.Avg(tree.getRoot());
+    cout << "Среднее: " << tree.Avg();
     cout << "\n\n";
-    cout << "Глубина: " << tree.Depth(tree.getRoot());
+    cout << "Глубина: " << tree.Depth();
     cout << "\n\n";
     system("Pause");
+#endif // Check1
+
+#ifdef DepthCheck
+    Tree tree = { 50,25,75,16,32,64,80,48,49 };
+    tree.Print();
+
+    Tree tree2 = tree;
+    tree2.Print();
+    cout << "Глубина: " << tree.Depth() << endl;
+#endif // DEBUG
+
+    
 }
